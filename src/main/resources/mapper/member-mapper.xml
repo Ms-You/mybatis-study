@@ -3,8 +3,36 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="Member">
-    <insert id="save" parameterType="member">
-        insert into member(id, login_id, password, nickname, roles)
-        values (#{id}, #{loginId}, #{password}, #{nickname}, #{roles})
+    <resultMap id="memberResultMap" type="com.mybatis.board.vo.MemberVO">
+        <id property="memberId" column="member_id" />
+        <result property="loginId" column="login_id" />
+        <result property="password" column="password" />
+        <result property="nickname" column="nickname" />
+        <result property="roles" column="roles" />
+        <association property="memberImageVO" column="member_id" javaType="com.mybatis.board.vo.MemberImageVO" select="selectMemberImageByMemberId" />
+    </resultMap>
+
+    <select id="selectMemberById" resultMap="memberResultMap">
+        SELECT m.member_id AS memberId, m.login_id AS loginId, m.password, m.nickname, m.roles,
+                mi.member_image_id AS memberImageId, mi.url, mi.name, mi.member_id AS memberId
+        FROM member m
+        LEFT JOIN member_image mi ON m.member_id = mi.member_id
+        WHERE m.member_id = #{memberId}
+    </select>
+
+    <select id="selectMemberImageByMemberId" resultType="com.mybatis.board.vo.MemberImageVO" parameterType="long">
+        SELECT member_image_id AS memberImageId, url, name, member_id AS memberId
+        FROM member_image
+        WHERE member_id = #{memberId}
+    </select>
+
+    <insert id="saveMember" parameterType="com.mybatis.board.vo.MemberVO">
+        INSERT INTO member(login_id, password, nickname, roles)
+        VALUES (#{loginId}, #{password}, #{nickname}, #{roles})
+    </insert>
+
+    <insert id="saveMemberImage" parameterType="com.mybatis.board.vo.MemberImageVO">
+        INSERT INTO member_image (url, name, member_id)
+        VALUES (#{url}, #{name}, #{memberId})
     </insert>
 </mapper>

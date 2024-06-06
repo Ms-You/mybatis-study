@@ -25,4 +25,13 @@ public class MemberService {
         memberRepository.save(memberVO);
     }
 
+    @Transactional(readOnly = true)
+    public MemberDTO.InfoRes getMemberInfo(Long id) {
+        MemberVO memberVO = memberRepository.findById(id).orElseThrow(() -> {
+            throw new IllegalArgumentException("사용자가 존재하지 않습니다.");
+        });
+
+        return new MemberDTO.InfoRes().convertByMemberVO(memberVO);
+    }
+
 }
