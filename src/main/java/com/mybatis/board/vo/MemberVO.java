@@ -2,6 +2,9 @@ package com.mybatis.board.vo;
 
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 @ToString
@@ -13,6 +16,8 @@ public class MemberVO {
     private String nickname;
     private RoleType roles;
     private MemberImageVO memberImageVO;
+    private List<ReviewVO> reviewVOList = new ArrayList<>();
+    private List<CommentVO> commentVOList = new ArrayList<>();
 
     @Builder
     private MemberVO(String loginId, String password, String nickname, RoleType roles) {
