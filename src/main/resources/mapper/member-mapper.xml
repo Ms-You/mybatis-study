@@ -13,22 +13,22 @@
     </resultMap>
 
     <select id="selectMemberById" resultMap="memberResultMap">
-        SELECT m.member_id AS memberId, m.login_id AS loginId, m.password, m.nickname, m.roles,
-                mi.member_image_id AS memberImageId, mi.url, mi.name, mi.member_id AS memberId
+        SELECT m.member_id, m.login_id, m.password, m.nickname, m.roles,
+                mi.member_image_id, mi.url, mi.name, mi.member_id
         FROM member m
         LEFT JOIN member_image mi ON m.member_id = mi.member_id
         WHERE m.member_id = #{memberId}
     </select>
 
     <select id="selectMemberImageByMemberId" resultType="com.mybatis.board.vo.MemberImageVO" parameterType="long">
-        SELECT member_image_id AS memberImageId, url, name, member_id AS memberId
+        SELECT member_image_id, url, name, member_id
         FROM member_image
         WHERE member_id = #{memberId}
     </select>
 
     <select id="findByLoginId" resultMap="memberResultMap">
-        SELECT m.member_id AS memberId, m.login_id AS loginId, m.password, m.nickname, m.roles,
-        mi.member_image_id AS memberImageId, mi.url, mi.name, mi.member_id AS memberId
+        SELECT m.member_id, m.login_id, m.password, m.nickname, m.roles,
+        mi.member_image_id, mi.url, mi.name, mi.member_id
         FROM member m
         LEFT JOIN member_image mi ON m.member_id = mi.member_id
         WHERE m.login_id = #{loginId}
