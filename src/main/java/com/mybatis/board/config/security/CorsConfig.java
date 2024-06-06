@@ -14,7 +14,6 @@ public class CorsConfig {
         CorsConfiguration configuration = new CorsConfiguration();
 
         configuration.addExposedHeader("Authorization");
-        configuration.addExposedHeader("RefreshToken");
         configuration.addAllowedOriginPattern("*");
         configuration.addAllowedHeader("*");
         configuration.addAllowedMethod("*");
