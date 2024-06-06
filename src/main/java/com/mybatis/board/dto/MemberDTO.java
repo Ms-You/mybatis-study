@@ -18,6 +18,13 @@ public class MemberDTO {
 
     @Getter
     @NoArgsConstructor
+    public static class LoginReq {
+        private String loginId;
+        private String password;
+    }
+
+    @Getter
+    @NoArgsConstructor
     @AllArgsConstructor
     @Builder
     public static class InfoRes {

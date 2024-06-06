@@ -2,6 +2,7 @@ package com.mybatis.board.controller;
 
 import com.mybatis.board.dto.MemberDTO;
 import com.mybatis.board.service.MemberService;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,9 +20,18 @@ public class MemberController {
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
-    @GetMapping("/user/{id}")
-    public ResponseEntity<MemberDTO.InfoRes> getMemberInfo(@PathVariable(name = "id") Long id) {
-        MemberDTO.InfoRes infoRes = memberService.getMemberInfo(id);
+    @PostMapping("/login")
+    public ResponseEntity login(@RequestBody MemberDTO.LoginReq loginReq, HttpServletResponse response) {
+        String token = memberService.login(loginReq);
+
+        response.setHeader("Authorization", "Bearer " + token);
+
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @GetMapping("/user")
+    public ResponseEntity<MemberDTO.InfoRes> getMemberInfo() {
+        MemberDTO.InfoRes infoRes = memberService.getMemberInfo();
 
         return ResponseEntity.ok(infoRes);
     }

@@ -20,4 +20,8 @@ public class MemberRepository {
         return Optional.ofNullable(sqlSessionTemplate.selectOne("Member.selectMemberById", id));
     }
 
+    public Optional<MemberVO> findByLoginId(String loginId) {
+        return Optional.ofNullable(sqlSessionTemplate.selectOne("Member.findByLoginId", loginId));
+    }
+
 }
