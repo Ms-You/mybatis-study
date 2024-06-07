@@ -27,7 +27,7 @@
         WHERE member_id = #{memberId}
     </select>
 
-    <insert id="saveReview" parameterType="com.mybatis.board.vo.ReviewVO">
+    <insert id="saveReview" parameterType="com.mybatis.board.vo.ReviewVO" useGeneratedKeys="true" keyProperty="reviewId">
         INSERT INTO review (title, content, store_name, region, member_id)
         VALUES (#{title}, #{content}, #{storeName}, #{region}, #{memberId})
     </insert>
