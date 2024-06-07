@@ -9,38 +9,25 @@
         <result property="password" column="password" />
         <result property="nickname" column="nickname" />
         <result property="roles" column="roles" />
-        <association property="memberImageVO" column="member_id" javaType="com.mybatis.board.vo.MemberImageVO" select="selectMemberImageByMemberId" />
+        <association property="memberImageVO" javaType="com.mybatis.board.vo.MemberImageVO" column="member_id" select="MemberImage.selectMemberImageByMemberId" />
+        <collection property="reviewVOList" ofType="com.mybatis.board.vo.ReviewVO" column="member_id" select="Review.selectReviewByMemberId" />
+        <collection property="commentVOList" ofType="com.mybatis.board.vo.CommentVO" column="member_id" select="Comment.selectCommentByMemberId" />
     </resultMap>
 
-    <select id="selectMemberById" resultMap="memberResultMap">
-        SELECT m.member_id, m.login_id, m.password, m.nickname, m.roles,
-                mi.member_image_id, mi.url, mi.name, mi.member_id
-        FROM member m
-        LEFT JOIN member_image mi ON m.member_id = mi.member_id
-        WHERE m.member_id = #{memberId}
-    </select>
-
-    <select id="selectMemberImageByMemberId" resultType="com.mybatis.board.vo.MemberImageVO" parameterType="long">
-        SELECT member_image_id, url, name, member_id
-        FROM member_image
+    <select id="selectMemberById" resultMap="memberResultMap" parameterType="long">
+        SELECT member_id, login_id, password, nickname, roles
+        FROM member
         WHERE member_id = #{memberId}
     </select>
 
-    <select id="findByLoginId" resultMap="memberResultMap">
-        SELECT m.member_id, m.login_id, m.password, m.nickname, m.roles,
-        mi.member_image_id, mi.url, mi.name, mi.member_id
-        FROM member m
-        LEFT JOIN member_image mi ON m.member_id = mi.member_id
-        WHERE m.login_id = #{loginId}
+    <select id="findByLoginId" resultMap="memberResultMap" parameterType="String">
+        SELECT member_id, login_id, password, nickname, roles
+        FROM member
+        WHERE login_id = #{loginId}
     </select>
 
     <insert id="saveMember" parameterType="com.mybatis.board.vo.MemberVO">
         INSERT INTO member(login_id, password, nickname, roles)
         VALUES (#{loginId}, #{password}, #{nickname}, #{roles})
-    </insert>
-
-    <insert id="saveMemberImage" parameterType="com.mybatis.board.vo.MemberImageVO">
-        INSERT INTO member_image (url, name, member_id)
-        VALUES (#{url}, #{name}, #{memberId})
     </insert>
 </mapper>

@@ -8,8 +8,8 @@ import lombok.*;
 @NoArgsConstructor
 public class ReceiptImageVO {
     private Long receiptImageId;
-    private String name;
     private String url;
+    private String name;
     private Long reviewId;
 
     @Builder
