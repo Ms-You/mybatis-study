@@ -16,6 +16,12 @@ public enum ErrorCode {
     MEMBER_NOT_FOUND(HttpStatus.BAD_REQUEST.value(), "사용자를 찾을 수 없습니다."),
     MEMBER_ALREADY_EXISTS(HttpStatus.BAD_REQUEST.value(), "이미 존재하는 사용자입니다."),
     PASSWORD_NOT_MATCHED(HttpStatus.BAD_REQUEST.value(), "비밀번호가 일치하지 않습니다."),
+    REVIEW_NOT_FOUND(HttpStatus.BAD_REQUEST.value(), "리뷰를 찾을 수 없습니다."),
+
+    FILE_EMPTY(HttpStatus.BAD_REQUEST.value(), "빈 파일입니다."),
+    FILE_PATH_ERROR(HttpStatus.BAD_REQUEST.value(), "파일 경로가 일치하지 않습니다."),
+    FILE_STORE_ERROR(HttpStatus.BAD_REQUEST.value(), "파일 저장에 실패했습니다."),
+    FILE_CANT_READ(HttpStatus.BAD_REQUEST.value(), "파일을 읽을 수 없습니다."),
     ;
 
 
