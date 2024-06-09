@@ -7,6 +7,7 @@ import com.mybatis.board.config.jwt.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -29,8 +30,11 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(configurationSource))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/review/**").authenticated()
-                        .requestMatchers("/reviews/**").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/review/**").authenticated()
+                        .requestMatchers(HttpMethod.PUT, "/review/**").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/review/**").authenticated()
+                        .requestMatchers("/reviews/user/**").authenticated()
+                        .requestMatchers("/reviews/comments/user/**").authenticated()
                         .requestMatchers("/user/**").authenticated()
                         .anyRequest().permitAll()
                 ).exceptionHandling(exceptionHandling -> exceptionHandling
