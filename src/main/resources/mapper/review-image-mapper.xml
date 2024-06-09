@@ -19,4 +19,10 @@
         INSERT INTO review_image (url, name, review_id)
         VALUES (#{url}, #{name}, #{reviewId})
     </insert>
+
+    <delete id="deleteReviewImagesByReviewId" parameterType="long">
+        DELETE
+        FROM review_image
+        WHERE review_id = #{reviewId}
+    </delete>
 </mapper>

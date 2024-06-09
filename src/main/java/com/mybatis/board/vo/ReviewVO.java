@@ -28,4 +28,11 @@ public class ReviewVO {
         this.region = region;
         this.memberId = memberId;
     }
+
+    public void update(String title, String content, String storeName, String region) {
+        this.title = title;
+        this.content = content;
+        this.storeName = storeName;
+        this.region = region;
+    }
 }

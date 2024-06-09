@@ -13,4 +13,10 @@
         INSERT INTO receipt_image (name, url, review_id)
         VALUES (#{name}, #{url}, #{reviewId})
     </insert>
+
+    <delete id="deleteReceiptImageByReviewId" parameterType="long">
+        DELETE
+        FROM receipt_image
+        WHERE review_id = #{reviewId}
+    </delete>
 </mapper>

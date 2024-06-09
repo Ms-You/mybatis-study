@@ -18,4 +18,9 @@ public class ReceiptImageVO {
         this.name = name;
         this.reviewId = reviewId;
     }
+
+    public void update(String name, String url) {
+        this.name = name;
+        this.url = url;
+    }
 }

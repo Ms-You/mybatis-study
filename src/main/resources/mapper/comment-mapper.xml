@@ -37,4 +37,10 @@
         FROM comment
         WHERE comment_id = #{commentId}
     </delete>
+
+    <delete id="deleteCommentsByReviewId" parameterType="long">
+        DELETE
+        FROM comment
+        WHERE review_id = #{reviewId}
+    </delete>
 </mapper>
