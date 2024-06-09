@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RequiredArgsConstructor
 @RestController
@@ -35,4 +36,16 @@ public class MemberController {
 
         return ResponseEntity.ok(infoRes);
     }
+
+    @PatchMapping("/user")
+    public ResponseEntity updateMemberInfo(@RequestPart(value = "nickname", required = false) String nickname,
+                          @RequestPart(value = "password", required = false) String password,
+                          @RequestPart(value = "passwordConfirm", required = false) String passwordConfirm,
+                          @RequestPart(value = "image", required = false) MultipartFile image) {
+        MemberDTO.InfoRes infoRes = memberService.updateMemberInfo(nickname, password, passwordConfirm, image);
+
+        return ResponseEntity.ok().body(infoRes);
+    }
+
+
 }

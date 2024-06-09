@@ -26,4 +26,16 @@ public class MemberVO {
         this.nickname = nickname;
         this.roles = roles;
     }
+
+    public void updateNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public void updatePassword(String password) {
+        this.password = password;
+    }
+
+    public void updateImage(MemberImageVO memberImageVO) {
+        this.memberImageVO = memberImageVO;
+    }
 }

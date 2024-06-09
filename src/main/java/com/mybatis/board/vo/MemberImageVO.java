@@ -18,4 +18,9 @@ public class MemberImageVO {
         this.name = name;
         this.memberId = memberId;
     }
+
+    public void updateMemberImage(String name, String url) {
+        this.name = name;
+        this.url = url;
+    }
 }
