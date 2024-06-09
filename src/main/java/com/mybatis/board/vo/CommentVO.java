@@ -18,4 +18,8 @@ public class CommentVO {
         this.memberId = memberId;
         this.reviewId = reviewId;
     }
+
+    public void updateContent(String content) {
+        this.content = content;
+    }
 }

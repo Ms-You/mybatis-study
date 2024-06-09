@@ -18,6 +18,7 @@ public enum ErrorCode {
     PASSWORD_NOT_MATCHED(HttpStatus.BAD_REQUEST.value(), "비밀번호가 일치하지 않습니다."),
     REVIEW_NOT_FOUND(HttpStatus.BAD_REQUEST.value(), "리뷰를 찾을 수 없습니다."),
     WRITER_NOT_MATCH(HttpStatus.BAD_REQUEST.value(), "작성자가 일치하지 않습니다."),
+    COMMENT_NOT_FOUND(HttpStatus.BAD_REQUEST.value(), "댓글을 찾을 수 없습니다."),
 
     FILE_EMPTY(HttpStatus.BAD_REQUEST.value(), "빈 파일입니다."),
     FILE_PATH_ERROR(HttpStatus.BAD_REQUEST.value(), "파일 경로가 일치하지 않습니다."),

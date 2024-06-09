@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CommentDTO">
+    <select id="findAllCommentsWithMemberInfoByReviewId" resultType="com.mybatis.board.dto.CommentDTO$InfoRes">
+        SELECT c.comment_id AS id, c.content, m.member_id AS memberId, m.nickname, COALESCE(mi.url, '') AS image
+        FROM comment c
+        JOIN member m ON c.member_id = m.member_id
+        LEFT JOIN member_image mi ON m.member_id = mi.member_id
+        WHERE c.review_id = #{reviewId}
+    </select>
+</mapper>

@@ -27,12 +27,12 @@
         WHERE member_id = #{memberId}
     </select>
 
-    <insert id="saveComment" parameterType="com.mybatis.board.vo.CommentVO">
+    <insert id="saveComment" parameterType="com.mybatis.board.vo.CommentVO" useGeneratedKeys="true" keyProperty="commentId">
         INSERT INTO comment (content, member_id, review_id)
         VALUES (#{content}, #{memberId}, #{reviewId})
     </insert>
 
-    <delete id="deleteComment" parameterType="long">
+    <delete id="deleteCommentById" parameterType="long">
         DELETE
         FROM comment
         WHERE comment_id = #{commentId}
