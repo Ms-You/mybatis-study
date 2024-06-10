@@ -13,4 +13,8 @@ public class ReceiptImageRepository {
     public void save(ReceiptImageVO receiptImageVO) {
         sqlSessionTemplate.insert("ReceiptImage.saveReceiptImage", receiptImageVO);
     }
+
+    public void deleteByReviewId(Long reviewId) {
+        sqlSessionTemplate.delete("ReceiptImage.deleteReceiptImageByReviewId", reviewId);
+    }
 }

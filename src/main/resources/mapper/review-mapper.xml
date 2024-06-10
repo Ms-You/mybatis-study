@@ -52,6 +52,12 @@
         VALUES (#{title}, #{content}, #{storeName}, #{region}, #{memberId})
     </insert>
 
+    <update id="updateReview" parameterType="com.mybatis.board.vo.ReviewVO">
+        UPDATE review
+        SET title = #{title}, content = #{content}, store_name = #{storeName}, region = #{region}
+        WHERE review_id = #{reviewId}
+    </update>
+
     <delete id="deleteById" parameterType="long">
         DELETE
         FROM review

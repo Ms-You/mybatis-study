@@ -13,4 +13,8 @@ public class ReviewImageRepository {
     public void save(ReviewImageVO reviewImageVO) {
         sqlSessionTemplate.insert("ReviewImage.saveReviewImage", reviewImageVO);
     }
+
+    public void deleteAllByReviewId(Long reviewId) {
+        sqlSessionTemplate.delete("ReviewImage.deleteReviewImagesByReviewId", reviewId);
+    }
 }

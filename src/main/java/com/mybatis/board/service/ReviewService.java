@@ -99,19 +99,29 @@ public class ReviewService {
         );
 
         validateMemberWriteReview(memberVO, reviewVO);
-        reviewVO.update(reviewReq.getTitle(), reviewReq.getContent(), reviewReq.getStoreName(), reviewReq.getRegion());
+
+        if(reviewReq != null) {
+            reviewVO.update(reviewReq.getTitle(), reviewReq.getContent(), reviewReq.getStoreName(), reviewReq.getRegion());
+
+             reviewRepository.update(reviewVO);
+        }
 
         handleReviewImages(reviewVO, reviewImageFiles);
         handleReceiptImage(reviewVO, receiptImage);
 
-        return new ReviewDTO.InfoRes().toResByReviewVO(reviewVO);
+        ReviewVO updatedReviewVO = reviewRepository.findById(reviewVO.getReviewId()).orElseThrow(
+                () -> new GlobalException(ErrorCode.REVIEW_NOT_FOUND)
+        );
+
+        return new ReviewDTO.InfoRes().toResByReviewVO(updatedReviewVO);
     }
 
     private void handleReviewImages(ReviewVO reviewVO, MultipartFile[] reviewImageFiles) {
         if(reviewImageFiles != null) {
             reviewVO.getReviewImageVOList().forEach(reviewImageVO -> fileUploadUtil.deleteFile(reviewImageVO.getName()));
-
             reviewVO.getReviewImageVOList().clear();
+
+             reviewImageRepository.deleteAllByReviewId(reviewVO.getReviewId());
 
             Arrays.stream(reviewImageFiles).forEach((reviewImageFile) -> {
                 if (!reviewImageFile.isEmpty()) {
@@ -133,23 +143,19 @@ public class ReviewService {
         if(receiptImage != null) {
             if(reviewVO.getReceiptImageVO() != null) {
                 fileUploadUtil.deleteFile(reviewVO.getReceiptImageVO().getName());
+
+                 receiptImageRepository.deleteByReviewId(reviewVO.getReviewId());
             }
 
             Path filePath = fileUploadUtil.store(receiptImage);
             String filename = filePath.getFileName().toString();
             String url = "http://localhost:8080/review/img/" + filePath.getFileName();
 
-            ReceiptImageVO receiptImageVO = reviewVO.getReceiptImageVO();
-
-            if (receiptImageVO == null) {
-                receiptImageVO = ReceiptImageVO.builder()
+            ReceiptImageVO receiptImageVO = ReceiptImageVO.builder()
                         .name(filename)
                         .url(url)
                         .reviewId(reviewVO.getReviewId())
                         .build();
-            } else {
-                receiptImageVO.update(filename, url);
-            }
 
             receiptImageRepository.save(receiptImageVO);
         }

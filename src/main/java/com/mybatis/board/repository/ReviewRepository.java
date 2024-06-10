@@ -17,6 +17,10 @@ public class ReviewRepository {
         sqlSessionTemplate.insert("Review.saveReview", reviewVO);
     }
 
+    public void update(ReviewVO reviewVO) {
+        sqlSessionTemplate.update("Review.updateReview", reviewVO);
+    }
+
     public Optional<ReviewVO> findById(Long reviewId) {
         return Optional.ofNullable(sqlSessionTemplate.selectOne("Review.selectReviewById", reviewId));
     }

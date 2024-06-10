@@ -26,7 +26,7 @@ public class ReviewController {
 
     @PutMapping("/review/{reviewId}")
     public ResponseEntity updateReview(@PathVariable(value = "reviewId") Long reviewId,
-                                       @RequestPart(value = "reviewReq")ReviewDTO.ReviewReq reviewReq,
+                                       @RequestPart(value = "reviewReq", required = false) ReviewDTO.ReviewReq reviewReq,
                                        @RequestPart(value = "images", required = false) MultipartFile[] reviewImageFiles,
                                        @RequestPart(value = "receiptImage", required = false) MultipartFile receiptFile) {
         ReviewDTO.InfoRes res = reviewService.updateReview(reviewId, reviewReq, reviewImageFiles, receiptFile);
