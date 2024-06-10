@@ -32,6 +32,12 @@
         VALUES (#{content}, #{memberId}, #{reviewId})
     </insert>
 
+    <update id="updateComment" parameterType="com.mybatis.board.vo.CommentVO">
+        UPDATE comment
+        SET content = #{content}
+        WHERE comment_id = #{commentId}
+    </update>
+
     <delete id="deleteCommentById" parameterType="long">
         DELETE
         FROM comment

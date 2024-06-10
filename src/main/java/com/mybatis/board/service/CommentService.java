@@ -59,24 +59,6 @@ public class CommentService {
     @Transactional(readOnly = true)
     public List<CommentDTO.InfoRes> getComments(Long reviewId) {
         return commentRepository.findAllCommentsWithMemberInfoByReviewId(reviewId);
-//        List<CommentVO> commentVOList = commentRepository.findAllByReviewId(reviewId);
-//
-//        return commentVOList.stream()
-//                .map(commentVO -> {
-//                    MemberVO memberVO = memberRepository.findById(commentVO.getMemberId()).orElseThrow(
-//                            () -> new GlobalException(ErrorCode.MEMBER_NOT_FOUND)
-//                    );
-//
-//                    CommentDTO.InfoRes res = CommentDTO.InfoRes.builder()
-//                            .id(commentVO.getCommentId())
-//                            .content(commentVO.getContent())
-//                            .memberId(memberVO.getMemberId())
-//                            .nickname(memberVO.getNickname())
-//                            .image(memberVO.getMemberImageVO() != null ? memberVO.getMemberImageVO().getUrl() : "")
-//                            .build();
-//
-//                    return res;
-//                }).collect(Collectors.toList());
     }
 
     @Transactional
@@ -92,7 +74,7 @@ public class CommentService {
         validateMemberWroteComment(memberVO, commentVO);
 
         commentVO.updateContent(commentReq.getContent());
-        commentRepository.save(commentVO);
+        commentRepository.update(commentVO);
 
         CommentVO savedCommentVo = commentRepository.findById(commentVO.getCommentId()).orElseThrow(
                 () -> new GlobalException(ErrorCode.COMMENT_NOT_FOUND)

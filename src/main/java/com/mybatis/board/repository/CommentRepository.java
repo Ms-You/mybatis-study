@@ -18,6 +18,10 @@ public class CommentRepository {
         sqlSessionTemplate.insert("Comment.saveComment", commentVO);
     }
 
+    public void update(CommentVO commentVO) {
+        sqlSessionTemplate.update("Comment.updateComment", commentVO);
+    }
+
     public Optional<CommentVO> findById(Long commentId) {
         return Optional.ofNullable(sqlSessionTemplate.selectOne("Comment.selectCommentById", commentId));
     }
