@@ -13,4 +13,8 @@ public class MemberImageRepository {
     public void save(MemberImageVO memberImageVO) {
         sqlSessionTemplate.insert("MemberImage.saveMemberImage", memberImageVO);
     }
+
+    public void deleteByMemberId(Long memberId) {
+        sqlSessionTemplate.delete("MemberImage.deleteByMemberId", memberId);
+    }
 }

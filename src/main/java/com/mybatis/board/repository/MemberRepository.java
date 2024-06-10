@@ -16,6 +16,10 @@ public class MemberRepository {
         sqlSessionTemplate.insert("Member.saveMember", memberVO);
     }
 
+    public void update(MemberVO memberVO) {
+        sqlSessionTemplate.update("Member.updateMember", memberVO);
+    }
+
     public Optional<MemberVO> findById(Long id) {
         return Optional.ofNullable(sqlSessionTemplate.selectOne("Member.selectMemberById", id));
     }

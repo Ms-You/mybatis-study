@@ -82,8 +82,11 @@ public class MemberService {
             throw new GlobalException(ErrorCode.MEMBER_NOT_FOUND);
         });
 
+        boolean isUpdated = false;
+
         if(nickname != null) {
             memberVO.updateNickname(nickname);
+            isUpdated = true;
         }
 
         if(password != null && passwordConfirm != null) {
@@ -92,29 +95,31 @@ public class MemberService {
             }
 
             memberVO.updatePassword(passwordEncoder.encode(password));
+            isUpdated = true;
         }
 
         if(image != null) {
+            if(memberVO.getMemberImageVO() != null) {
+                fileUploadUtil.deleteFile(memberVO.getMemberImageVO().getName());
+
+                memberImageRepository.deleteByMemberId(memberVO.getMemberId());
+            }
+
             Path filePath = fileUploadUtil.store(image);
             String filename = filePath.getFileName().toString();
             String url = "http://localhost:8080/user/img/" + filename;
 
-            MemberImageVO memberImageVO = memberVO.getMemberImageVO();
-
-            if(memberImageVO != null) {
-                memberImageVO = memberVO.getMemberImageVO();
-
-                fileUploadUtil.deleteFile(memberImageVO.getName());
-                memberImageVO.updateMemberImage(filename, url);
-            } else {
-                memberImageVO = MemberImageVO.builder()
+            MemberImageVO memberImageVO = MemberImageVO.builder()
                         .name(filename)
                         .url(url)
                         .memberId(memberVO.getMemberId())
                         .build();
-            }
 
             memberImageRepository.save(memberImageVO);
+        }
+
+        if(isUpdated) {
+            memberRepository.update(memberVO);
         }
 
         MemberVO updatedMemberVo = memberRepository.findById(memberVO.getMemberId()).orElseThrow(

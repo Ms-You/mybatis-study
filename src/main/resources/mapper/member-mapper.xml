@@ -30,4 +30,10 @@
         INSERT INTO member(login_id, password, nickname, roles)
         VALUES (#{loginId}, #{password}, #{nickname}, #{roles})
     </insert>
+
+    <update id="updateMember" parameterType="com.mybatis.board.vo.MemberVO">
+        UPDATE member
+        SET nickname = #{nickname}, password = #{password}
+        WHERE member_id = #{memberId}
+    </update>
 </mapper>

@@ -12,4 +12,10 @@
         INSERT INTO member_image (url, name, member_id)
         VALUES (#{url}, #{name}, #{memberId})
     </insert>
+
+    <delete id="deleteByMemberId" parameterType="long">
+        DELETE
+        FROM member_image
+        WHERE member_id = #{memberId}
+    </delete>
 </mapper>
