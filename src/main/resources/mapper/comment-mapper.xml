@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Comment">
+    <resultMap id="commentResultMap" type="com.mybatis.board.vo.CommentVO">
+        <id property="commentId" column="comment_id" />
+        <result property="content" column="content" />
+        <result property="memberId" column="member_id" />
+        <result property="reviewId" column="review_id" />
+    </resultMap>
+
+    <select id="selectCommentByReviewId" resultMap="commentResultMap" parameterType="long">
+        SELECT comment_id, content, member_id, review_id
+        FROM comment
+        WHERE review_id = #{reviewId}
+    </select>
+
+    <select id="selectCommentById" resultMap="commentResultMap" parameterType="long">
+        SELECT comment_id, content, member_id, review_id
+        FROM comment
+        WHERE comment_id = #{commentId}
+    </select>
+
+    <select id="selectCommentByMemberId" resultMap="commentResultMap" parameterType="long">
+        SELECT comment_id, content, member_id, review_id
+        FROM comment
+        WHERE member_id = #{memberId}
+    </select>
+
+    <insert id="saveComment" parameterType="com.mybatis.board.vo.CommentVO" useGeneratedKeys="true" keyProperty="commentId">
+        INSERT INTO comment (content, member_id, review_id)
+        VALUES (#{content}, #{memberId}, #{reviewId})
+    </insert>
+
+    <update id="updateComment" parameterType="com.mybatis.board.vo.CommentVO">
+        UPDATE comment
+        SET content = #{content}
+        WHERE comment_id = #{commentId}
+    </update>
+
+    <delete id="deleteCommentById" parameterType="long">
+        DELETE
+        FROM comment
+        WHERE comment_id = #{commentId}
+    </delete>
+
+    <delete id="deleteCommentsByReviewId" parameterType="long">
+        DELETE
+        FROM comment
+        WHERE review_id = #{reviewId}
+    </delete>
+</mapper>

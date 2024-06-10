@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MemberImage">
+    <select id="selectMemberImageByMemberId" resultType="com.mybatis.board.vo.MemberImageVO" parameterType="long">
+        SELECT member_image_id, url, name, member_id
+        FROM member_image
+        WHERE member_id = #{memberId}
+    </select>
+
+    <insert id="saveMemberImage" parameterType="com.mybatis.board.vo.MemberImageVO">
+        INSERT INTO member_image (url, name, member_id)
+        VALUES (#{url}, #{name}, #{memberId})
+    </insert>
+
+    <delete id="deleteByMemberId" parameterType="long">
+        DELETE
+        FROM member_image
+        WHERE member_id = #{memberId}
+    </delete>
+</mapper>

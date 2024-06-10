@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Review">
+    <resultMap id="reviewResultMap" type="com.mybatis.board.vo.ReviewVO">
+        <id property="reviewId" column="review_id" />
+        <result property="title" column="title" />
+        <result property="content" column="content" />
+        <result property="storeName" column="store_name" />
+        <result property="region" column="region" />
+        <result property="memberId" column="member_id" />
+        <!-- 지연 로딩 -->
+        <association property="receiptImageVO" javaType="com.mybatis.board.vo.ReceiptImageVO" column="review_id" select="ReceiptImage.selectReceiptImageByReviewId" />
+        <collection property="reviewImageVOList" ofType="com.mybatis.board.vo.ReviewImageVO" column="review_id" select="ReviewImage.selectReviewImageByReviewId" />
+        <collection property="commentVOList" ofType="com.mybatis.board.vo.CommentVO" column="review_id" select="Comment.selectCommentByReviewId" />
+    </resultMap>
+
+    <select id="selectReviewById" resultMap="reviewResultMap" parameterType="long">
+        SELECT review_id, title, content, store_name, region, member_id
+        FROM review
+        WHERE review_id = #{reviewId}
+    </select>
+
+    <select id="selectReviewByMemberId" resultMap="reviewResultMap" parameterType="long">
+        SELECT review_id, title, content, store_name, region, member_id
+        FROM review
+        WHERE member_id = #{memberId}
+    </select>
+
+    <select id="selectReviews" resultMap="reviewResultMap">
+        SELECT r.review_id, r.title, r.content, r.store_name, r.region, r.member_id
+        FROM review r
+        LEFT JOIN receipt_image ri ON r.review_id = ri.review_id
+        LEFT JOIN review_image ri2 ON r.review_id = ri2.review_id
+        LEFT JOIN member m ON r.member_id = m.member_id
+    </select>
+
+    <select id="selectReviewsWithKeyword" resultMap="reviewResultMap" parameterType="String">
+        SELECT r.review_id, r.title, r.content, r.store_name, r.region, r.member_id
+        FROM review r
+        LEFT JOIN receipt_image ri ON r.review_id = ri.review_id
+        LEFT JOIN review_image ri2 ON r.review_id = ri2.review_id
+        LEFT JOIN member m ON r.member_id = m.member_id
+        WHERE r.title like #{searchKeyword}
+            OR r.content like #{searchKeyword}
+            OR r.store_name like #{searchKeyword}
+            OR r.region like #{searchKeyword}
+    </select>
+
+    <insert id="saveReview" parameterType="com.mybatis.board.vo.ReviewVO" useGeneratedKeys="true" keyProperty="reviewId">
+        INSERT INTO review (title, content, store_name, region, member_id)
+        VALUES (#{title}, #{content}, #{storeName}, #{region}, #{memberId})
+    </insert>
+
+    <update id="updateReview" parameterType="com.mybatis.board.vo.ReviewVO">
+        UPDATE review
+        SET title = #{title}, content = #{content}, store_name = #{storeName}, region = #{region}
+        WHERE review_id = #{reviewId}
+    </update>
+
+    <delete id="deleteById" parameterType="long">
+        DELETE
+        FROM review
+        WHERE review_id = #{reviewId}
+    </delete>
+</mapper>

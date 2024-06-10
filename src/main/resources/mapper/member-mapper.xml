@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Member">
+    <resultMap id="memberResultMap" type="com.mybatis.board.vo.MemberVO">
+        <id property="memberId" column="member_id" />
+        <result property="loginId" column="login_id" />
+        <result property="password" column="password" />
+        <result property="nickname" column="nickname" />
+        <result property="roles" column="roles" />
+        <association property="memberImageVO" javaType="com.mybatis.board.vo.MemberImageVO" column="member_id" select="MemberImage.selectMemberImageByMemberId" />
+        <collection property="reviewVOList" ofType="com.mybatis.board.vo.ReviewVO" column="member_id" select="Review.selectReviewByMemberId" />
+        <collection property="commentVOList" ofType="com.mybatis.board.vo.CommentVO" column="member_id" select="Comment.selectCommentByMemberId" />
+    </resultMap>
+
+    <select id="selectMemberById" resultMap="memberResultMap" parameterType="long">
+        SELECT member_id, login_id, password, nickname, roles
+        FROM member
+        WHERE member_id = #{memberId}
+    </select>
+
+    <select id="findByLoginId" resultMap="memberResultMap" parameterType="String">
+        SELECT member_id, login_id, password, nickname, roles
+        FROM member
+        WHERE login_id = #{loginId}
+    </select>
+
+    <insert id="saveMember" parameterType="com.mybatis.board.vo.MemberVO">
+        INSERT INTO member(login_id, password, nickname, roles)
+        VALUES (#{loginId}, #{password}, #{nickname}, #{roles})
+    </insert>
+
+    <update id="updateMember" parameterType="com.mybatis.board.vo.MemberVO">
+        UPDATE member
+        SET nickname = #{nickname}, password = #{password}
+        WHERE member_id = #{memberId}
+    </update>
+</mapper>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ReviewImage">
+    <resultMap id="reviewImageResultMap" type="com.mybatis.board.vo.ReviewImageVO">
+        <id property="reviewImageId" column="review_image_id" />
+        <result property="url" column="url" />
+        <result property="name" column="name" />
+        <result property="reviewId" column="review_id" />
+    </resultMap>
+
+    <select id="selectReviewImageByReviewId" resultMap="reviewImageResultMap" parameterType="long">
+        SELECT review_image_id, url, name, review_id
+        FROM review_image
+        WHERE review_id = #{reviewId}
+    </select>
+
+    <insert id="saveReviewImage" parameterType="com.mybatis.board.vo.ReviewImageVO">
+        INSERT INTO review_image (url, name, review_id)
+        VALUES (#{url}, #{name}, #{reviewId})
+    </insert>
+
+    <delete id="deleteReviewImagesByReviewId" parameterType="long">
+        DELETE
+        FROM review_image
+        WHERE review_id = #{reviewId}
+    </delete>
+</mapper>

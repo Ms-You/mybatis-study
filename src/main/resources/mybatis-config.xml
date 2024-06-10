@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <typeAliases>
+        <typeAlias type="com.mybatis.board.vo.MemberVO" alias="member"></typeAlias>
+        <typeAlias type="com.mybatis.board.vo.MemberImageVO" alias="memberImage"></typeAlias>
+        <typeAlias type="com.mybatis.board.vo.ReviewVO" alias="review"></typeAlias>
+        <typeAlias type="com.mybatis.board.vo.ReviewImageVO" alias="reviewImage"></typeAlias>
+        <typeAlias type="com.mybatis.board.vo.ReceiptImageVO" alias="receiptImage"></typeAlias>
+        <typeAlias type="com.mybatis.board.vo.CommentVO" alias="comment"></typeAlias>
+        <typeAlias type="com.mybatis.board.dto.CommentDTO$InfoRes" alias="commentDTO"></typeAlias>
+    </typeAliases>
+</configuration>
